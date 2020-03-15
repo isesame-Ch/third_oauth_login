@@ -19,7 +19,7 @@ use Isesame\ThirdOauthLogin\ThirdOauth;
 $appId = '101857153';   // APPID
 $appKey = '22d50fa16429fb679516d2f837f16fa3';   // APPKEY
 $oauthUrl = 'https://graph.qq.com/oauth2.0/authorize';  // 第三方oauth地址
-$redirectUrl = 'xxx'; // 回调地址
+$callbackUrl = 'xxx'; // 回调地址
 
 $oauthService = new ThirdOauth('QQ');
 
@@ -31,7 +31,7 @@ $options = [
 $oauthService->setOptions($options);
 
 // 获取AuthorizationCode
-$url = $oauthService->getAuthorizationCode($redirectUrl);
+$url = $oauthService->getAuthorizationCode($callbackUrl);
 header('location:'.$url)
 ```
 回调：
@@ -41,22 +41,10 @@ header('location:'.$url)
 ...
 use Isesame\ThirdOauthLogin\ThirdOauth;
 ...
-
-$appId = '101857153';   // APPID
-$appKey = '22d50fa16429fb679516d2f837f16fa3';   // APPKEY
-$oauthUrl = 'https://graph.qq.com/oauth2.0/authorize';  // 第三方oauth地址
-$redirectUrl = 'xxx'; // 回调地址
-
 $oauthService = new ThirdOauth('QQ');
 
-$options = [
-    'appId' => $appId,
-    'appKey' => $appKey,
-    'oauthUrl' => $oauthUrl
-];
-$oauthService->setOptions($options);
-$authorizationCode = $_POST['authorizationCode'];
-$url = $oauthService->getAccessToken($authorizationCode,$redirectUrl);
+$authorizationCode = $_GET['authorizationCode'];
+$url = $oauthService->getAccessToken($authorizationCode,$callbackUrl);
 ...
 ```
 

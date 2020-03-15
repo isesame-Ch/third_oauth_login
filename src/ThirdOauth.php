@@ -67,18 +67,18 @@ class ThirdOauth
     }
 
     /**
-     * @param string $redirectUri
+     * @param string $callbackUri
      * @param string $state
      * @param string $scope
      * @param $display
      * @return mixed|string
      * @throws NoConfigAppException
      */
-    public function getAuthorizationCode($redirectUri = '', $state = 'ISESAME_STATE', $scope = '', $display = 1)
+    public function getAuthorizationCode($callbackUri = '', $state = 'ISESAME_STATE', $scope = '', $display = 1)
     {
         switch ($this->thirdApplication) {
             case 'QQ':
-                $oauthService = new QqOauthService($this->oauthUrl, $this->appId, $this->appKey, $redirectUri);
+                $oauthService = new QqOauthService($this->oauthUrl, $this->appId, $this->appKey, $callbackUri);
                 break;
             default :
                 throw new NoConfigAppException('You have not config this application oauth', 4003);

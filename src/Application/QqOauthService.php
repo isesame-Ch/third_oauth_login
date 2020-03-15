@@ -26,14 +26,14 @@ class QqOauthService extends ThirdApplicationOauth implements ThirdApplication
      * @param $oauthUrl
      * @param $appId
      * @param $appKey
-     * @param string $redirectUri
+     * @param string $callbackUri
      */
-    public function __construct($oauthUrl, $appId, $appKey, $redirectUri = '')
+    public function __construct($oauthUrl, $appId, $appKey, $callbackUri = '')
     {
         $this->oauthUrl = $oauthUrl;
         $this->appId = $appId;
         $this->appKey = $appKey;
-        $this->redirectUri = $redirectUri ? : $_SERVER['SERVER_NAME'] . '/home';
+        $this->redirectUri = $callbackUri ? : $_SERVER['SERVER_NAME'] . '/home';
     }
 
     public function getAuthorizationCode($state = 'ISESAME_STATE', $scope = '', $display = self::DISPLAY_PC_TYPE)
@@ -41,7 +41,7 @@ class QqOauthService extends ThirdApplicationOauth implements ThirdApplication
         $requestParams = [
             'response_type' => 'code',
             'client_id' => $this->appId,
-            'redirect_uri' => urlencode($this->redirectUri),
+            'redirect_uri' => $this->redirectUri,
             'state' => $state,
         ];
 
@@ -64,7 +64,7 @@ class QqOauthService extends ThirdApplicationOauth implements ThirdApplication
             'client_id' => $this->appId,
             'client_secret' => $this->appKey,
             'code' => $code,
-            'redirect_uri' => urlencode($this->redirectUri),
+            'redirect_uri' => $this->redirectUri,
         ];
 
         $requestUrl = $this->oauthUrl . '?' . http_build_query($requestParams);
